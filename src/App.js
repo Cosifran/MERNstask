@@ -7,6 +7,7 @@ import NewAccount from "./components/auth/NewAccount";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 //Import State
 import AsksState from "./context/asks/AsksState";
+import AlertState from "./context/alert/AlertState";
 import ProjectState from "./context/projects/ProjectState";
 function App() {
   const router = createBrowserRouter([
@@ -29,7 +30,9 @@ function App() {
   return (
     <ProjectState>
       <AsksState>
-        <RouterProvider router={router} />
+        <AlertState>
+          <RouterProvider router={router} />
+        </AlertState>
       </AsksState>
     </ProjectState>
   );

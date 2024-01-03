@@ -12,3 +12,6 @@ export const DELETE_ASK = "DELETE_ASK";
 export const UPDATE_ASK = "UPDATE_ASK";
 export const CURRENT_ASK = "CURRENT_ASK";
 export const VALIDATION_ASK = "VALIDATION_ASK";
+
+export const GET_ALERT = "GET_ALERT"
+export const DELETE_ALERT = "DELETE_ALERT"

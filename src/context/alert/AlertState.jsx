@@ -15,12 +15,12 @@ const AlertState = (props) => {
   const [state, dispatch] = useReducer(alertReducer, initialState);
 
   //funciones
-  const getAlertFn = (msg, categoria) => {
+  const getAlertFn = (msg, category) => {
     dispatch({
       type: GET_ALERT,
       payload: {
         msg,
-        categoria,
+        category,
       },
     });
 

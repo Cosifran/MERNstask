@@ -1,25 +1,52 @@
 //Import fuctions react
-import React from "react"
-import {useState} from "react"
-//Import react router
-import {Link} from "react-router-dom"
+import React from "react";
+import {useState, useContext} from "react";
+//Import context
+import AlertContext from "../../context/alert/alertContext";
 const NewAccount = () => {
+  const alertContext = useContext(AlertContext);
+  const {alert, getAlertFn} = alertContext;
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
     confirm: "",
-  })
+  });
+
+  const {name, email, password, confirm} = user;
 
   const onChange = (e) => {
-    setUser({...user, [e.target.name]: e.target.value})
-  }
+    setUser({...user, [e.target.name]: e.target.value});
+  };
 
   const onSubmit = (e) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+    //validar que no hayan campos vacios
+    if (
+      name.trim() === "" ||
+      email.trim() === "" ||
+      password.trim() === "" ||
+      confirm.trim() === ""
+    ) {
+      getAlertFn("Todos los campos son obligatorios", "alerta-error");
+      return;
+    }
+
+    //el password debe ser de almenos 6 caracteres
+    if (password.length < 6) {
+      getAlertFn("La contraseña debe ser mayor a 6 caracteres", "alerta-error");
+      return;
+    }
+
+    //los password son iguales
+    if (password !== confirm) {
+      getAlertFn("Las contraseñas no coinciden", "alerta-error");
+      return;
+    }
+  };
   return (
     <div className="form-usuario">
+      {alert && <div className={`alerta ${alert.category}`}>{alert.msg}</div>}
       <div className="contenedor-form sombra-dark">
         <h1>Obtener cuenta</h1>
 
@@ -78,7 +105,7 @@ const NewAccount = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default NewAccount
+export default NewAccount;

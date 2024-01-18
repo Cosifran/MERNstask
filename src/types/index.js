@@ -15,3 +15,11 @@ export const VALIDATION_ASK = "VALIDATION_ASK";
 
 export const GET_ALERT = "GET_ALERT"
 export const DELETE_ALERT = "DELETE_ALERT"
+
+export const GET_USER = "GET_USER"
+export const SIGN_OUT = "SIGN_OUT"
+export const ERROR_LOGIN = "ERROR_LOGIN"
+export const USER_LOGIN = "SUCCESS_LOGIN"
+export const ERROR_REGISTRATION = "ERROR_REGISTRATION"
+export const SUCCESS_REGISTRATION = "SUCCESS_REGISTRATION"
+

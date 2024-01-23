@@ -2,8 +2,11 @@
 import React from "react";
 import {useState, useContext} from "react";
 //Import context
+import AuthContext from "../../context/auth/authContext";
 import AlertContext from "../../context/alert/alertContext";
 const NewAccount = () => {
+  const authContext = useContext(AuthContext);
+  const {registerUserFn} = authContext;
   const alertContext = useContext(AlertContext);
   const {alert, getAlertFn} = alertContext;
   const [user, setUser] = useState({
@@ -43,6 +46,12 @@ const NewAccount = () => {
       getAlertFn("Las contraseñas no coinciden", "alerta-error");
       return;
     }
+
+    registerUserFn({
+      name,
+      email,
+      password,
+    });
   };
   return (
     <div className="form-usuario">

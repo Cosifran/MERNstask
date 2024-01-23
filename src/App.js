@@ -28,6 +28,7 @@ function App() {
       errorElement: "Error",
     },
   ]);
+  console.log(process.env.REACT_APP_BACKEND_URL)
   return (
     <ProjectState>
       <AsksState>

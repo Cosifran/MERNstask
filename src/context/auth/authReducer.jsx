@@ -8,6 +8,19 @@ import {
 } from "../../types";
 export default (state, action) => {
   switch (action.type) {
+    case SUCCESS_REGISTRATION:
+      localStorage.setItem('token', action.payload.token)
+      return{
+        ...state,
+        authenticated: true,
+        menssage: null
+      }
+    case ERROR_REGISTRATION:
+      return{
+        token:null,
+        menssage: action.payload
+      }
+
     default:
       return state;
   }

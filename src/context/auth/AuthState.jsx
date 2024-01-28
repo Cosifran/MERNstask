@@ -12,6 +12,7 @@ import {useReducer} from "react";
 import authContext from "./authContext";
 import authReducer from "./authReducer";
 //import clientAxios
+import tokenAuth from "../../config/token";
 import clientAxios from "../../config/axios";
 
 const AuthState = (props) => {
@@ -34,8 +35,11 @@ const AuthState = (props) => {
         type: SUCCESS_REGISTRATION,
         payload: reply.data,
       });
+
+      //obtener al usuario
+      userAutenticateFn()
     } catch (error) {
-      console.log();
+      console.log(error.response);
       const alert = {
         msg: error.response.data.msg,
         category: "alerta-error",
@@ -46,6 +50,27 @@ const AuthState = (props) => {
       });
     }
   };
+
+  const userAutenticateFn = async () => {
+    const token = localStorage.getItem('token')
+    console.log('token', token)
+
+    if(token){
+      tokenAuth(token)
+    }
+
+    try {
+      const request = await clientAxios.get('/api/auth')
+      console.log(request)
+
+      
+    } catch (error) {
+      console.log(error.response)
+      dispacth({
+        type: ERROR_LOGIN,
+      })
+    }
+  }
 
   return (
     <authContext.Provider

@@ -1,12 +1,14 @@
 //Import fuctions react
 import React from "react";
-import {useState, useContext} from "react";
+import {useState, useContext, useEffect} from "react";
 //Import context
 import AuthContext from "../../context/auth/authContext";
 import AlertContext from "../../context/alert/alertContext";
-const NewAccount = () => {
+//Import fuctions react-router
+import { useNavigate } from 'react-router-dom';
+const NewAccount = (props) => {
   const authContext = useContext(AuthContext);
-  const {registerUserFn} = authContext;
+  const {authenticated, menssage, registerUserFn} = authContext;
   const alertContext = useContext(AlertContext);
   const {alert, getAlertFn} = alertContext;
   const [user, setUser] = useState({
@@ -15,8 +17,19 @@ const NewAccount = () => {
     password: "",
     confirm: "",
   });
+  const navigate = useNavigate()
 
   const {name, email, password, confirm} = user;
+
+  useEffect(() => {
+    if (authenticated) {
+     navigate("/projects");
+    }
+
+    if (menssage) {
+      getAlertFn(menssage.msg, menssage.category);
+    }
+  }, [menssage, authenticated, props.history]);
 
   const onChange = (e) => {
     setUser({...user, [e.target.name]: e.target.value});

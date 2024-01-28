@@ -15,12 +15,12 @@ export default (state, action) => {
         authenticated: true,
         menssage: null
       }
+    case ERROR_LOGIN:
     case ERROR_REGISTRATION:
       return{
         token:null,
         menssage: action.payload
       }
-
     default:
       return state;
   }

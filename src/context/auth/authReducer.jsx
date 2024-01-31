@@ -8,19 +8,28 @@ import {
 } from "../../types";
 export default (state, action) => {
   switch (action.type) {
+    case USER_LOGIN:
     case SUCCESS_REGISTRATION:
-      localStorage.setItem('token', action.payload.token)
-      return{
+      return {
         ...state,
         authenticated: true,
-        menssage: null
-      }
+        menssage: null,
+      };
+
+    case GET_USER:
+      return {
+        ...state,
+        user: action.payload,
+        authenticated: true,
+        menssage: null,
+      };
     case ERROR_LOGIN:
     case ERROR_REGISTRATION:
-      return{
-        token:null,
-        menssage: action.payload
-      }
+      localStorage.removeItem("token");
+      return {
+        token: null,
+        menssage: action.payload,
+      };
     default:
       return state;
   }

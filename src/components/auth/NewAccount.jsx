@@ -8,9 +8,9 @@ import AlertContext from "../../context/alert/alertContext";
 import { useNavigate } from 'react-router-dom';
 const NewAccount = (props) => {
   const authContext = useContext(AuthContext);
-  const {authenticated, menssage, registerUserFn} = authContext;
   const alertContext = useContext(AlertContext);
   const {alert, getAlertFn} = alertContext;
+  const {authenticated, menssage, registerUserFn} = authContext;
   const [user, setUser] = useState({
     name: "",
     email: "",

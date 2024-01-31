@@ -29,17 +29,15 @@ const AuthState = (props) => {
   const registerUserFn = async (data) => {
     try {
       const reply = await clientAxios.post("/api/usuarios", data);
-      console.log(reply);
-
+      localStorage.setItem("token", reply.data.token);
       dispacth({
         type: SUCCESS_REGISTRATION,
         payload: reply.data,
       });
 
       //obtener al usuario
-      userAutenticateFn()
+      await userAutenticateFn();
     } catch (error) {
-      console.log(error.response);
       const alert = {
         msg: error.response.data.msg,
         category: "alerta-error",
@@ -51,26 +49,46 @@ const AuthState = (props) => {
     }
   };
 
-  const userAutenticateFn = async () => {
-    const token = localStorage.getItem('token')
-    console.log('token', token)
+  const loginUserFn = async (data) => {
+    try {
+      const reply = await clientAxios.post("/api/auth", data);
+      console.log(reply)
+      dispacth({
+        type: USER_LOGIN,
+        payload: reply.data,
+      });
+    } catch (error) {
+      console.log(error.response);
+      const alert = {
+        msg: error.response.data.error[0].msg,
+        category: "alerta-error",
+      };
+      dispacth({
+        type: ERROR_LOGIN,
+        payload: alert,
+      });
+    }
+  };
 
-    if(token){
-      tokenAuth(token)
+  const userAutenticateFn = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      tokenAuth(token);
     }
 
     try {
-      const request = await clientAxios.get('/api/auth')
-      console.log(request)
-
-      
+      const request = await clientAxios.get("/api/auth");
+      dispacth({
+        type: GET_USER,
+        payload: request.data.usuario,
+      });
     } catch (error) {
-      console.log(error.response)
+      console.log(error.response);
       dispacth({
         type: ERROR_LOGIN,
-      })
+      });
     }
-  }
+  };
 
   return (
     <authContext.Provider
@@ -80,6 +98,7 @@ const AuthState = (props) => {
         menssage: state.menssage,
         authenticated: state.authenticated,
         registerUserFn,
+        loginUserFn,
       }}>
       {props.children}
     </authContext.Provider>
